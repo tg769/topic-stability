@@ -1,0 +1,45 @@
+[    5.7s] python 3.13.18 on Linux-6.18.44-fc-v595-x86_64-with-glibc2.39
+[    5.7s] numpy 2.5.3, pandas 3.0.5, scikit-learn 1.9.1, umap-learn 0.5.12
+[    6.6s] n=20000, models=['tfidf', 'minilm', 'mpnet', 'specter'], algos=['kmeans', 'gmm', 'agglomerative', 'hdbscan'], seeds=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], k=8, hdbscan min_cluster_size=100, parallel jobs=1 (of 2 cores)
+[   28.4s] [1/40] tfidf UMAP seed 0 done 
+[   51.8s] [2/40] tfidf UMAP seed 1 done 
+[   71.8s] [3/40] tfidf UMAP seed 2 done 
+[   92.4s] [4/40] tfidf UMAP seed 3 done 
+[  115.8s] [5/40] tfidf UMAP seed 4 done 
+[  130.7s] [6/40] tfidf UMAP seed 5 done 
+[  144.5s] [7/40] tfidf UMAP seed 6 done 
+[  161.0s] [8/40] tfidf UMAP seed 7 done 
+[  176.0s] [9/40] tfidf UMAP seed 8 done 
+[  189.6s] [10/40] tfidf UMAP seed 9 done 
+[  210.3s] [11/40] minilm UMAP seed 0 done 
+[  269.0s] [12/40] minilm UMAP seed 1 done UMAP 38.7s
+[  301.7s] [13/40] minilm UMAP seed 2 done UMAP 11.8s
+[  334.6s] [14/40] minilm UMAP seed 3 done UMAP 12.3s
+[  368.9s] [15/40] minilm UMAP seed 4 done UMAP 12.3s
+[  396.8s] [16/40] minilm UMAP seed 5 done UMAP 12.9s
+[  422.7s] [17/40] minilm UMAP seed 6 done UMAP 12.2s
+[  450.2s] [18/40] minilm UMAP seed 7 done UMAP 12.0s
+[  479.1s] [19/40] minilm UMAP seed 8 done UMAP 11.8s
+[  507.3s] [20/40] minilm UMAP seed 9 done UMAP 12.4s
+[  546.1s] [21/40] mpnet UMAP seed 0 done UMAP 15.4s
+[  579.5s] [22/40] mpnet UMAP seed 1 done UMAP 12.2s
+[  614.5s] [23/40] mpnet UMAP seed 2 done UMAP 12.4s
+[  648.4s] [24/40] mpnet UMAP seed 3 done UMAP 13.1s
+[  681.0s] [25/40] mpnet UMAP seed 4 done UMAP 12.1s
+[  709.9s] [26/40] mpnet UMAP seed 5 done UMAP 13.1s
+[  740.5s] [27/40] mpnet UMAP seed 6 done UMAP 12.5s
+[  769.0s] [28/40] mpnet UMAP seed 7 done UMAP 12.6s
+[  794.6s] [29/40] mpnet UMAP seed 8 done UMAP 12.3s
+[  820.4s] [30/40] mpnet UMAP seed 9 done UMAP 12.2s
+[  860.0s] [31/40] specter UMAP seed 0 done UMAP 14.1s
+[  894.5s] [32/40] specter UMAP seed 1 done UMAP 12.5s
+[  926.3s] [33/40] specter UMAP seed 2 done UMAP 12.6s
+[  959.3s] [34/40] specter UMAP seed 3 done UMAP 12.3s
+[  993.5s] [35/40] specter UMAP seed 4 done UMAP 13.3s
+[ 1021.5s] [36/40] specter UMAP seed 5 done UMAP 13.1s
+[ 1048.3s] [37/40] specter UMAP seed 6 done UMAP 12.4s
+[ 1074.3s] [38/40] specter UMAP seed 7 done UMAP 13.0s
+[ 1101.8s] [39/40] specter UMAP seed 8 done UMAP 13.1s
+[ 1128.6s] [40/40] specter UMAP seed 9 done UMAP 12.4s
+[ 1354.6s] baselines done
+[ 1355.6s] saved 564 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n20000

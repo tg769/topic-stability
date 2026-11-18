@@ -1,0 +1,17 @@
+setup,model,algorithm,category,mean_flip,share_ever_flipped
+most_accurate,mpnet,kmeans,cs.CV,0.03204,0.1488
+most_accurate,mpnet,kmeans,cs.CL,0.008639999999999998,0.0408
+most_accurate,mpnet,kmeans,cs.LG,0.16371999999999998,0.7968
+most_accurate,mpnet,kmeans,cs.CR,0.012319999999999996,0.0584
+most_accurate,mpnet,kmeans,math.PR,0.00468,0.0168
+most_accurate,mpnet,kmeans,astro-ph.GA,3.999999999999999e-05,0.0004
+most_accurate,mpnet,kmeans,hep-th,0.00208,0.0092
+most_accurate,mpnet,kmeans,quant-ph,0.00412,0.0172
+least_stable,specter,hdbscan,cs.CV,0.35436000000000006,0.9972
+least_stable,specter,hdbscan,cs.CL,0.29744,0.998
+least_stable,specter,hdbscan,cs.LG,0.32324,0.9908
+least_stable,specter,hdbscan,cs.CR,0.30988000000000004,0.9904
+least_stable,specter,hdbscan,math.PR,0.00616,0.0212
+least_stable,specter,hdbscan,astro-ph.GA,0.00035999999999999997,0.0016
+least_stable,specter,hdbscan,hep-th,0.0012399999999999998,0.0048
+least_stable,specter,hdbscan,quant-ph,0.01764,0.0552

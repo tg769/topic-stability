@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Stable Are Unsupervised Topics?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">CS 472 Final Project · Northern Arizona University · Fall 2026</p>
+    <h1>How Stable Are Unsupervised Topics?</h1>
+    <p class="sub">Embedding choice vs. clustering algorithm on arXiv abstracts</p>
+    <p class="authors">Tanmay Ghate and Aryan Sharma</p>
+    <p class="links">
+      <a href="https://github.com/tg769/topic-stability">Code on GitHub</a>
+      <a href="#reproduce">How to run it</a>
+    </p>
+  </div>
+</header>
+
+<nav class="toc wrap">
+  <a href="#question">Question</a>
+  <a href="#data">Data</a>
+  <a href="#method">Method</a>
+  <a href="#results">Results</a>
+  <a href="#seeds">Where the change comes from</a>
+  <a href="#sensitivity">Settings</a>
+  <a href="#consensus">Consensus</a>
+  <a href="#errors">Errors</a>
+  <a href="#limits">Limits</a>
+  <a href="#reproduce">Run it</a>
+</nav>
+
+<main class="wrap">
+
+<section id="question">
+  <h2>The question</h2>
+  <p>A popular way to find topics in text is to turn each document into an embedding, shrink it with UMAP, and cluster it. The catch is that if you rerun the same thing with a different random seed, you can get different topics. So a single run might just be luck.</p>
+  <p>We wanted to know what causes that change. Is it the <b>embedding model</b>, the <b>clustering algorithm</b>, or the random seed itself? We also split the seed into two parts, the seed inside UMAP and the seed inside the clusterer, because in most tools one seed controls both and nobody checks which one matters.</p>
+  <div class="callout"><b>Our "new bit":</b> we hold one seed still while changing the other, so we can see how much of the instability comes from UMAP and how much from the clusterer.</div>
+</section>
+
+<section id="data">
+  <h2>Data</h2>
+  <p>We used a free copy of the arXiv metadata on Hugging Face (<code>gfissore/arxiv-abstracts-2021</code>, CC0, papers through 2021). Each paper has an abstract and a list of categories. We use the first listed category as the paper's label.</p>
+  <ul>
+    <li><b>Main run:</b> 20,000 abstracts, 2,500 from each of 8 categories.</li>
+    <li><b>Size checks:</b> the 5,000 abstract pilot, and 50,000 abstracts for one embedding.</li>
+    <li><b>Categories:</b> cs.CV (vision), cs.CL (language), cs.LG (machine learning), cs.CR (security), math.PR (probability), astro-ph.GA (galaxies), hep-th (high energy theory), quant-ph (quantum).</li>
+  </ul>
+  <p>The labels are never used for clustering. We only use them at the end to check how close the clusters are to the real categories.</p>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+  <ol class="steps">
+    <li><b>Embed</b> each abstract four ways: TF-IDF + SVD (classic baseline), MiniLM, MPNet, and SPECTER (a model trained on scientific papers).</li>
+    <li><b>Reduce</b> to 5 dimensions with UMAP.</li>
+    <li><b>Cluster</b> four ways: k-means, Gaussian mixture (GMM), agglomerative (ward) and HDBSCAN. The first three are told to make 8 clusters. HDBSCAN picks its own number; we set its minimum cluster size to 0.5% of the data, a rule that does not look at the labels.</li>
+    <li><b>Repeat</b> with seeds 0 to 9 under three conditions: only the UMAP seed changes, only the clusterer seed changes, or both change.</li>
+    <li><b>Score</b> two things:
+      <ul>
+        <li><b>Stability:</b> adjusted Rand index (ARI) between every pair of runs. 1.0 means the two runs made the same groups.</li>
+        <li><b>Accuracy:</b> normalized mutual information (NMI) between the clusters and the arXiv categories.</li>
+      </ul>
+    </li>
+  </ol>
+  <p>Baselines: LDA topic modeling (each paper gets its top topic) and random labels. We also tested the number of clusters, HDBSCAN's minimum cluster size, and combining runs with consensus clustering.</p>
+</section>
+
+<section id="results">
+  <h2>Main results (20,000 abstracts)</h2>
+  <figure>
+    <img src="figures/fig1_heatmaps_n20000.png" alt="Heatmaps of stability and accuracy for 4 embeddings and 4 algorithms">
+    <figcaption>Mean pairwise ARI over 10 seeds (left) and mean NMI (right). Darker is better.</figcaption>
+  </figure>
+  <ul class="findings">
+    <li><b>Neural embeddings are more accurate.</b> MiniLM and MPNet reach NMI 0.84 to 0.85 with k-means, GMM and agglomerative. TF-IDF stays at 0.76 to 0.79.</li>
+    <li><b>SPECTER did not help.</b> Even though it was trained on papers, it scored a bit lower (0.82 to 0.83) than the general models on these abstracts.</li>
+    <li><b>Agglomerative was the most stable</b> of the methods that make 8 clusters (0.94 to 0.96), because its only randomness comes from UMAP.</li>
+    <li><b>HDBSCAN was the least predictable.</b> Its stability went from 0.72 to 1.00 and it found anywhere from 4 to 23 groups. MPNet with HDBSCAN gave the same answer every time (0.998), but only 4 groups and NMI 0.70. Stable does not mean right.</li>
+  </ul>
+  <figure>
+    <img src="figures/fig6_baselines_n20000.png" alt="Bar chart comparing LDA and random labels with k-means on each embedding">
+    <figcaption>Every embedding + clustering setup beats LDA (stability 0.56, NMI 0.64) by a wide margin. Random labels score 0, as they should.</figcaption>
+  </figure>
+  <figure class="narrow">
+    <img src="figures/fig3_variance_n20000.png" alt="Bar chart of how the spread in stability splits up">
+    <figcaption>How the spread in pairwise ARI splits up. The algorithm explains more (15%) than the embedding (8%), but most of the spread (60%) is between seed pairs inside the same setup. This is a descriptive split, not a significance test.</figcaption>
+  </figure>
+</section>
+
+<section id="seeds">
+  <h2>Where the change comes from: UMAP seed vs. clusterer seed</h2>
+  <figure>
+    <img src="figures/fig2_seed_source_n20000.png" alt="Grouped bars of stability when only the UMAP seed, only the clusterer seed, or both change">
+    <figcaption>Stability under each seed condition. Agglomerative and HDBSCAN have no randomness of their own, so their middle bar is 1.0 by definition.</figcaption>
+  </figure>
+  <ul class="findings">
+    <li>For agglomerative and HDBSCAN, <b>all</b> of the instability comes from UMAP.</li>
+    <li>For k-means and GMM, each seed on its own already moves the result a bit (stability about 0.91 to 0.99). When both change, the effects add up: TF-IDF with k-means drops from 0.96 with either seed alone to 0.87 with both.</li>
+    <li>So fixing only the clusterer seed is not enough. UMAP needs a fixed seed too, or its randomness has to be measured.</li>
+  </ul>
+</section>
+
+<section id="sensitivity">
+  <h2>How much the settings matter</h2>
+  <figure>
+    <img src="figures/fig4_hdbscan_sensitivity_n20000.png" alt="Line charts of HDBSCAN stability, accuracy and cluster count against minimum cluster size">
+    <figcaption>HDBSCAN with minimum cluster size 50, 100, 200 and 400. Small changes jump it between about 4 and 44 groups, and stability goes up and down with no clear pattern.</figcaption>
+  </figure>
+  <figure>
+    <img src="figures/fig5_k_sensitivity_n20000.png" alt="Line charts of stability and accuracy against number of clusters">
+    <figcaption>Number of clusters k = 6, 8, 10, 12. Accuracy peaks at k = 8 (the real number of categories) for every setup. Stability does not always peak there; agglomerative is most stable at k = 6.</figcaption>
+  </figure>
+  <figure>
+    <img src="figures/fig10_size_comparison.png" alt="Stability at 5k, 20k and 50k abstracts">
+    <figcaption>Stability at different data sizes. At 50k we only ran MiniLM with 5 seeds, and agglomerative switches to a nearest-neighbor graph version to fit in memory.</figcaption>
+  </figure>
+</section>
+
+<section id="consensus">
+  <h2>Does combining runs help?</h2>
+  <figure class="narrow">
+    <img src="figures/fig7_consensus_n20000.png" alt="Dot plot of single-run stability vs consensus stability">
+    <figcaption>We combined 5 runs into one consensus clustering, did the same with the other 5 seeds, and compared the two.</figcaption>
+  </figure>
+  <p>Consensus clustering makes k-means and GMM much more repeatable (stability 0.93 to 0.99 instead of 0.85 to 0.94), but it barely changes accuracy (NMI moves by 0.01 or less). It is a cheap fix for repeatability, not for quality.</p>
+</section>
+
+<section id="errors">
+  <h2>Error analysis</h2>
+  <div class="two">
+    <figure>
+      <img src="figures/fig8_category_mixing_n20000.png" alt="Matrix of how often papers from two categories share a cluster">
+      <figcaption>How often two papers from two categories land in the same cluster (MPNet + k-means).</figcaption>
+    </figure>
+    <figure>
+      <img src="figures/fig9_flips_n20000.png" alt="Share of abstracts per category that changed cluster at least once">
+      <figcaption>Share of abstracts that changed cluster at least once across the 10 seeds.</figcaption>
+    </figure>
+  </div>
+  <ul class="findings">
+    <li><b>cs.LG is the problem category.</b> In our most accurate setup, 80% of machine learning abstracts changed cluster at least once. A cs.CV paper and a cs.LG paper end up together 31% of the time. Machine learning papers are often about vision or language, so this overlap is real, not just a bug.</li>
+    <li>Physics and math categories (astro-ph.GA, hep-th, math.PR, quant-ph) almost never move.</li>
+    <li>In the least stable setup (SPECTER + HDBSCAN) nearly every computer science paper moved, because the four CS categories keep merging and splitting between seeds.</li>
+  </ul>
+</section>
+
+<section id="limits">
+  <h2>Limits</h2>
+  <ul>
+    <li>One set of 8 categories and one random sample per size. Other categories (or more similar ones) may behave differently.</li>
+    <li>arXiv categories are chosen by authors and overlap, so NMI is a rough check, not ground truth.</li>
+    <li>The variance split is descriptive. Runs that share a seed are not independent, so we did not run significance tests on it.</li>
+    <li>We kept UMAP settings fixed (5 dimensions, 15 neighbors). Those are another source of change we did not test.</li>
+    <li>The 50k check uses one embedding and 5 seeds only.</li>
+  </ul>
+  <h2>Takeaways</h2>
+  <ol>
+    <li>Report results over several seeds, and fix or vary the UMAP seed on purpose. One run is not enough.</li>
+    <li>If you need repeatable topics, agglomerative clustering or a consensus of several k-means runs is the safest choice in our tests.</li>
+    <li>Be careful with HDBSCAN defaults. A stable answer can still be the wrong number of topics.</li>
+  </ol>
+</section>
+
+<section id="reproduce">
+  <h2>Run it yourself</h2>
+<pre><code>git clone https://github.com/tg769/topic-stability
+cd topic-stability
+pip install -r requirements.txt
+python scripts/prepare_data.py --n 20000     # sample + embed
+python scripts/run_experiments.py --n 20000  # all clustering runs
+python scripts/analyze.py --n 20000          # result tables
+python scripts/make_figures.py --n 20000     # figures</code></pre>
+  <p>All settings and seeds are in <code>config.yaml</code>. The exact papers we sampled are listed in <code>data/ids_n20000.csv</code>.</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Tanmay Ghate and Aryan Sharma · CS 472, NAU · MIT License</p>
+</footer>
+</body>
+</html>

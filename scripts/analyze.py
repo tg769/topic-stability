@@ -67,7 +67,10 @@ def main():
         return [L[key] for key in sel["key"]], sel
 
     grid = runs[~runs["model"].isin(["lda", "random"])]
-    models = list(dict.fromkeys(grid["model"]))
+    # keep a fixed order (simple to complex) instead of whatever order the runs were saved in
+    order = ["tfidf", "minilm", "mpnet", "specter"]
+    found = set(grid["model"])
+    models = [m for m in order if m in found] + sorted(found - set(order))
     algos = [a for a in C.ALGOS if a in set(grid["algorithm"])]
 
     # ---------- stability under the three seed conditions ----------

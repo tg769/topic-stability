@@ -23,8 +23,34 @@ seed inside UMAP versus inside the clusterer.
 
 Also included: LDA and random-label baselines, sensitivity to the number of
 clusters and to HDBSCAN's minimum cluster size, a consensus-clustering test, a
-5k vs 20k size comparison, and an error analysis (which categories get mixed,
+size check at 5k, 20k and 50k, and an error analysis (which categories get mixed,
 which abstracts change cluster).
+
+## Main results (20,000 abstracts, 10 seeds)
+
+Website with all figures: https://tg769.github.io/topic-stability/
+
+| | k-means | GMM | Agglomerative | HDBSCAN |
+|---|---|---|---|---|
+| **Stability (pairwise ARI)** | | | | |
+| TF-IDF | 0.87 | 0.85 | 0.95 | 0.83 |
+| MiniLM | 0.94 | 0.93 | 0.96 | 0.78 |
+| MPNet | 0.94 | 0.91 | 0.95 | 1.00 |
+| SPECTER | 0.91 | 0.89 | 0.94 | 0.72 |
+| **Accuracy (NMI)** | | | | |
+| TF-IDF | 0.78 | 0.76 | 0.79 | 0.67 |
+| MiniLM | 0.85 | 0.84 | 0.84 | 0.76 |
+| MPNet | 0.85 | 0.84 | 0.84 | 0.70 |
+| SPECTER | 0.83 | 0.82 | 0.83 | 0.72 |
+
+- Neural embeddings are more accurate than TF-IDF. SPECTER (trained on papers) did not beat the general models.
+- For agglomerative and HDBSCAN all the instability comes from the UMAP seed. For k-means and GMM both seeds matter and their effects add up.
+- HDBSCAN is very sensitive to its minimum cluster size (4 to 44 groups). MPNet + HDBSCAN is almost perfectly stable (0.998) but finds only 4 groups.
+- LDA baseline: stability 0.56, NMI 0.64. Random labels: 0.
+- A consensus of 5 runs raises k-means/GMM stability to 0.93 to 0.99 with almost no change in accuracy.
+- cs.LG papers change cluster the most and often get grouped with cs.CV.
+
+Full tables are in `results/n20000/`, figures in `figures/`.
 
 ## Setup
 

@@ -1,0 +1,9 @@
+[    0.6s] python 3.13.18 on Linux-6.18.44-fc-v595-x86_64-with-glibc2.39
+[    0.6s] numpy 2.5.3, pandas 3.0.5, scikit-learn 1.9.1, umap-learn 0.5.12
+[    1.0s] n=50000, models=['minilm'], algos=['kmeans', 'gmm', 'agglomerative', 'hdbscan'], seeds=[0, 1, 2, 3, 4], k=8, hdbscan min_cluster_size=250, parallel jobs=1 (of 2 cores)
+[   84.4s] [1/5] minilm UMAP seed 0 done UMAP 53.2s
+[  147.4s] [2/5] minilm UMAP seed 1 done UMAP 30.8s
+[  207.8s] [3/5] minilm UMAP seed 2 done UMAP 31.7s
+[  268.6s] [4/5] minilm UMAP seed 3 done UMAP 30.7s
+[  339.5s] [5/5] minilm UMAP seed 4 done UMAP 32.2s
+[  339.7s] saved 36 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n50000

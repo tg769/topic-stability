@@ -1,0 +1,17 @@
+setup,model,algorithm,category,mean_flip,share_ever_flipped
+most_accurate,minilm,agglomerative,cs.CV,0.06031999999999999,0.20224
+most_accurate,minilm,agglomerative,cs.CL,0.00944,0.03632
+most_accurate,minilm,agglomerative,cs.LG,0.05561599999999999,0.17808
+most_accurate,minilm,agglomerative,cs.CR,0.0007359999999999999,0.00272
+most_accurate,minilm,agglomerative,math.PR,0.00208,0.00768
+most_accurate,minilm,agglomerative,astro-ph.GA,0.000544,0.0016
+most_accurate,minilm,agglomerative,hep-th,0.001792,0.00608
+most_accurate,minilm,agglomerative,quant-ph,0.00304,0.01072
+least_stable,minilm,hdbscan,cs.CV,0.18806399999999998,0.49872
+least_stable,minilm,hdbscan,cs.CL,0.36835199999999996,0.92528
+least_stable,minilm,hdbscan,cs.LG,0.183424,0.47936
+least_stable,minilm,hdbscan,cs.CR,0.002432,0.00688
+least_stable,minilm,hdbscan,math.PR,0.003456,0.01152
+least_stable,minilm,hdbscan,astro-ph.GA,0.000512,0.00144
+least_stable,minilm,hdbscan,hep-th,0.0008319999999999998,0.00272
+least_stable,minilm,hdbscan,quant-ph,0.0011519999999999998,0.00384

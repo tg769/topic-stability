@@ -120,7 +120,7 @@
   </figure>
   <figure>
     <img src="figures/fig10_size_comparison.png" alt="Stability at 5k, 20k and 50k abstracts">
-    <figcaption>Stability at different data sizes. At 50k we only ran MiniLM with 5 seeds, and agglomerative switches to a nearest-neighbor graph version to fit in memory.</figcaption>
+    <figcaption>Stability at 5k, 20k and 50k abstracts. More data did not make the results more stable: with MiniLM, k-means went from 0.94 (5k and 20k) to 0.90 at 50k, while accuracy stayed at about 0.84. At 50k we only ran MiniLM with 5 seeds, and agglomerative uses a nearest-neighbor graph version to fit in memory, so treat that point as a rough check.</figcaption>
   </figure>
 </section>
 

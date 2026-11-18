@@ -1,0 +1,2 @@
+model,min_cluster_size,stability,nmi,clusters,noise
+minilm,250,0.8160724402603868,0.770870278572891,7.4,0.051095999999999996

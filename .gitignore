@@ -1,0 +1,9 @@
+# big or rebuildable files
+embeddings/
+data/sample_*.csv
+data/*.log
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store

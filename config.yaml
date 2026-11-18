@@ -1,0 +1,51 @@
+# All settings for the study live here. Scripts read this file, so a run can be
+# repeated exactly by keeping this file and the seeds unchanged.
+
+data:
+  hf_repo: gfissore/arxiv-abstracts-2021      # CC0 copy of the arXiv metadata, papers through 2021
+  hf_revision: refs/convert/parquet
+  shards: [0, 1, 2, 3, 4]
+  categories: [cs.CV, cs.CL, cs.LG, cs.CR, math.PR, astro-ph.GA, hep-th, quant-ph]
+  min_chars: 200            # drop very short abstracts
+  data_seed: 42             # controls which abstracts are sampled
+
+embeddings:
+  tfidf:
+    max_features: 20000
+    min_df: 3
+    svd_dims: 100
+  neural:                   # sentence-transformers model ids
+    minilm: sentence-transformers/all-MiniLM-L6-v2
+    mpnet: sentence-transformers/all-mpnet-base-v2
+    specter: sentence-transformers/allenai-specter
+  batch_size: 64
+  device: auto              # auto = CUDA or Apple GPU (MPS) if present, else CPU
+
+umap:
+  n_components: 5
+  n_neighbors: 15
+  min_dist: 0.0
+  metric: cosine
+
+seeds:
+  n_seeds: 10               # seeds 0..9
+  fixed_seed: 0             # the seed held still in the one-factor conditions
+  sensitivity_seeds: 5      # seeds used for the sensitivity runs
+
+clustering:
+  k: 8                      # number of clusters for k-means, GMM and agglomerative
+  hdbscan_min_cluster_frac: 0.005   # min_cluster_size = 0.5% of the data (label-free rule)
+  agglomerative_graph_above: 30000  # above this size, ward uses a kNN graph to save memory
+  knn_neighbors: 30
+
+sensitivity:
+  k_values: [6, 8, 10, 12]
+  hdbscan_fracs: [0.0025, 0.005, 0.01, 0.02]
+
+lda:
+  max_features: 20000
+  min_df: 3
+  max_iter: 20
+
+consensus:
+  halves: [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]

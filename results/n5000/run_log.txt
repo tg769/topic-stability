@@ -1,0 +1,35 @@
+[    5.7s] python 3.13.18 on Linux-6.18.44-fc-v595-x86_64-with-glibc2.39
+[    5.7s] numpy 2.5.3, pandas 3.0.5, scikit-learn 1.9.1, umap-learn 0.5.12
+[    5.9s] n=5000, models=['tfidf', 'minilm', 'mpnet'], algos=['kmeans', 'gmm', 'agglomerative', 'hdbscan'], seeds=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], k=8, hdbscan min_cluster_size=25, parallel jobs=2 (of 2 cores)
+[    9.3s] [1/30] tfidf UMAP seed 1 done 
+[    9.6s] [2/30] tfidf UMAP seed 0 done 
+[   10.8s] [3/30] tfidf UMAP seed 2 done 
+[   11.2s] [4/30] tfidf UMAP seed 3 done 
+[   12.0s] [5/30] tfidf UMAP seed 5 done 
+[   12.3s] [6/30] tfidf UMAP seed 4 done 
+[   12.8s] [7/30] tfidf UMAP seed 6 done 
+[   13.2s] [8/30] tfidf UMAP seed 7 done 
+[   13.7s] [9/30] tfidf UMAP seed 8 done 
+[   14.2s] [10/30] tfidf UMAP seed 9 done 
+[   15.6s] [11/30] minilm UMAP seed 1 done 
+[   15.6s] [12/30] minilm UMAP seed 0 done 
+[   16.9s] [13/30] minilm UMAP seed 3 done 
+[   17.0s] [14/30] minilm UMAP seed 2 done 
+[   17.7s] [15/30] minilm UMAP seed 5 done 
+[   18.3s] [16/30] minilm UMAP seed 4 done 
+[   18.5s] [17/30] minilm UMAP seed 6 done 
+[   19.0s] [18/30] minilm UMAP seed 7 done 
+[   19.2s] [19/30] minilm UMAP seed 8 done 
+[   19.8s] [20/30] minilm UMAP seed 9 done 
+[   21.1s] [21/30] mpnet UMAP seed 0 done 
+[   21.2s] [22/30] mpnet UMAP seed 1 done 
+[   22.5s] [23/30] mpnet UMAP seed 3 done 
+[   22.6s] [24/30] mpnet UMAP seed 2 done 
+[   23.4s] [25/30] mpnet UMAP seed 5 done 
+[   23.9s] [26/30] mpnet UMAP seed 4 done 
+[   24.1s] [27/30] mpnet UMAP seed 6 done 
+[   24.6s] [28/30] mpnet UMAP seed 7 done 
+[   25.0s] [29/30] mpnet UMAP seed 8 done 
+[   25.4s] [30/30] mpnet UMAP seed 9 done 
+[   93.3s] baselines done
+[   93.5s] saved 428 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n5000

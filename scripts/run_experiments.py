@@ -197,7 +197,7 @@ def main():
     collected.sort(key=lambda x: x[0])
     np.savez_compressed(out_dir / "labels.npz", **{key: lab for key, lab, _ in collected})
     pd.DataFrame([row for _, _, row in collected]).to_csv(out_dir / "runs.csv", index=False)
-    log(f"saved {len(collected)} runs to {out_dir}")
+    log(f"saved {len(collected)} runs to results/{tag}")
 
 
 if __name__ == "__main__":

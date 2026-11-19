@@ -6,4 +6,4 @@
 [  207.8s] [3/5] minilm UMAP seed 2 done UMAP 31.7s
 [  268.6s] [4/5] minilm UMAP seed 3 done UMAP 30.7s
 [  339.5s] [5/5] minilm UMAP seed 4 done UMAP 32.2s
-[  339.7s] saved 36 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n50000
+[  339.7s] saved 36 runs to results/n50000

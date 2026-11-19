@@ -32,4 +32,4 @@
 [   25.0s] [29/30] mpnet UMAP seed 8 done 
 [   25.4s] [30/30] mpnet UMAP seed 9 done 
 [   93.3s] baselines done
-[   93.5s] saved 428 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n5000
+[   93.5s] saved 428 runs to results/n5000

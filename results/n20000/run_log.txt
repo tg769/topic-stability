@@ -42,4 +42,4 @@
 [ 1101.8s] [39/40] specter UMAP seed 8 done UMAP 13.1s
 [ 1128.6s] [40/40] specter UMAP seed 9 done UMAP 12.4s
 [ 1354.6s] baselines done
-[ 1355.6s] saved 564 runs to /tmp/claude-0/-home-claude/2177a363-a083-5234-8767-1f7c7232657c/scratchpad/repo/topic-stability/results/n20000
+[ 1355.6s] saved 564 runs to results/n20000
